@@ -1,20 +1,47 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import LoginScreen from "./src/screens/LoginScreen";
+import HomeScreen from "./src/screens/HomeScreen";
+import ForgotPasswordScreen from "./src/screens/ForgotPassword";
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function MainTabs({ setUser }) {
+	return (
+		<Tab.Navigator screenOptions={{ headerShown: false }}>
+			<Tab.Screen name="Home">
+				{(props) => <HomeScreen {...props} setUser={setUser} />}
+			</Tab.Screen>
+		</Tab.Navigator>
+	);
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+	const [user, setUser] = useState(false);
+
+	return (
+		<NavigationContainer>
+			<Stack.Navigator screenOptions={{ headerShown: false }}>
+				{user ? (
+					<Stack.Screen name="Main">
+						{(props) => <MainTabs {...props} setUser={setUser} />}
+					</Stack.Screen>
+				) : (
+					<Stack.Screen name="Login">
+						{(props) => (
+							<LoginScreen {...props} setUser={setUser} />
+						)}
+					</Stack.Screen>
+				)}
+				<Stack.Screen
+					name="ForgotPassword"
+					component={ForgotPasswordScreen}
+				/>
+			</Stack.Navigator>
+		</NavigationContainer>
+	);
+}

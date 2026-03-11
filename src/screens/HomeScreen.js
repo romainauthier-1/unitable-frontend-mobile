@@ -1,15 +1,25 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { themeColors } from "../theme/colors";
+import { useSelector } from "react-redux";
 
-export default function HomeScreen({ setUser }) {
+export default function HomeScreen() {
+	const user = useSelector((state) => state.auth.user);
+	console.log(user);
+
+	const today = new Date();
+
+	const formattedDate = today.toLocaleDateString("fr-FR", {
+		weekday: "short",
+		day: "2-digit",
+		month: "short",
+	});
+
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Bienvenue !</Text>
-			<TouchableOpacity
-				style={styles.button}
-				onPress={() => setUser(false)}
-			>
-				<Text style={styles.buttonText}>Déconnexion</Text>
-			</TouchableOpacity>
+			<View style={styles.header}>
+				<Text style={styles.title}>Bonjour {user.firstName} !</Text>
+				<Text style={styles.date}>{formattedDate}</Text>
+			</View>
 		</View>
 	);
 }
@@ -17,11 +27,15 @@ export default function HomeScreen({ setUser }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "#fff",
+		backgroundColor: themeColors.white,
+		paddingHorizontal: 24,
+		paddingTop: 80,
 	},
-	title: { fontSize: 24, fontWeight: "bold", marginBottom: 20 },
-	button: { backgroundColor: "#007AFF", padding: 15, borderRadius: 10 },
-	buttonText: { color: "#fff", fontWeight: "bold" },
+	header: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+	},
+	title: { fontSize: 24, fontWeight: "bold" },
+	date: { fontSize: 14, color: themeColors.text },
 });

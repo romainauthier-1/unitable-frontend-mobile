@@ -1,9 +1,9 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-export default function ForgotPassword() {
+export default function MyInfosScreen() {
 	return (
 		<View>
-			<Text>mot de pass oublié </Text>
+			<Text>Informations RH</Text>
 		</View>
 	);
 }

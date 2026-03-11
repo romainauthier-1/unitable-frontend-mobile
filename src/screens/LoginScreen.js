@@ -7,8 +7,10 @@ import {
 	Dimensions,
 } from "react-native";
 import { themeColors } from "../theme/colors";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Constants from "expo-constants";
+import { useDispatch } from "react-redux";
+import { login } from "../reducers/Auth";
 const { EXPO_BACK_URL } = Constants.expoConfig.extra;
 
 // const BACK_URL = process.env.EXPO_BACK_URL;
@@ -16,14 +18,16 @@ const { EXPO_BACK_URL } = Constants.expoConfig.extra;
 
 const screenHeight = Dimensions.get("window").height;
 
-export default function LoginScreen({ setUser, navigation }) {
+export default function LoginScreen({ navigation }) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 
+	const dispatch = useDispatch();
+
 	const validateInputs = () => {
 		if (!email || !password) {
-			setErrorMessage("Email ou mot de passe invalide");
+			setErrorMessage("L'email ou le mot de passe invalide.");
 			return false;
 		}
 		return true;
@@ -43,12 +47,18 @@ export default function LoginScreen({ setUser, navigation }) {
 			const data = await response.json();
 
 			if (data.result) {
-				setUser(true);
+				// setUser(true);
+				dispatch(
+					login({
+						user: data.user,
+						token: data.token,
+					}),
+				);
 
 				// console.log("Login successful:", data);
 			} else {
 				setErrorMessage(
-					data.message || "Email ou mot de passe invalide",
+					data.message || "L'email ou le mot de passe est invalide.",
 				);
 			}
 		} catch (error) {
@@ -103,7 +113,9 @@ export default function LoginScreen({ setUser, navigation }) {
 						/>
 					</View>
 					<TouchableOpacity
-						onPress={() => navigation.navigate("ForgotPassword")}
+						onPress={() =>
+							navigation.navigate("ForgotPasswordScreen")
+						}
 					>
 						<Text style={styles.forgotPassword}>
 							Mot de passe oublié?

@@ -9,4 +9,6 @@ export const themeColors = {
 	shift: "#9aaeff",
 	shiftLight: "#e5eaff",
 	shiftDark: "#1d47ee",
+	// Destructive
+	destructive: "#ca0d0d",
 };

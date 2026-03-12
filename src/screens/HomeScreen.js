@@ -36,6 +36,6 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		alignItems: "center",
 	},
-	title: { fontSize: 24, fontWeight: "bold" },
-	date: { fontSize: 14, color: themeColors.text },
+	title: { fontSize: 24, fontWeight: "bold", color: themeColors.primary },
+	date: { fontSize: 14, color: themeColors.text, marginTop: 4 },
 });

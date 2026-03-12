@@ -31,7 +31,7 @@ function MainTabs() {
 			screenOptions={{
 				headerShown: false,
 				tabBarActiveTintColor: themeColors.primary,
-				tabBarInactiveTintColor: themeColors.text,
+				tabBarInactiveTintColor: themeColors.muted,
 			}}
 		>
 			<Tab.Screen

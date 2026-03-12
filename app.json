@@ -24,6 +24,19 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "EXPO_BACK_URL": "https://unitable-backend.vercel.app/",
+      "eas": {
+        "projectId": "47b8443a-9662-4195-a07f-b7f27d26e1b0"
+      }
+    },
+    "owner": "dankysten",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/47b8443a-9662-4195-a07f-b7f27d26e1b0"
     }
   }
 }

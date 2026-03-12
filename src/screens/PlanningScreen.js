@@ -1,24 +1,34 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { themeColors } from "../theme/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
+import {
+	faChevronLeft,
+	faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function PlanningScreen() {
+	const tabBarHeight = useBottomTabBarHeight();
+
 	const [planning, setPlanning] = useState([]);
+	const [weekOffset, setWeekOffset] = useState(0);
 
 	const user = useSelector((state) => state.auth.user);
 	const token = useSelector((state) => state.auth.token);
 
+	// GESTION DES DATES
+	// Date d'aujourd'hui
 	const today = new Date();
-
+	// Date d'aujourd'hui transformée
 	const formattedDate = today.toLocaleDateString("fr-FR", {
 		weekday: "short",
 		day: "2-digit",
 		month: "short",
 	});
-
+	// Affichage des jours
 	const days = [
 		"Lundi",
 		"Mardi",
@@ -28,13 +38,15 @@ export default function PlanningScreen() {
 		"Samedi",
 		"Dimanche",
 	];
-
-	const todayIndex = (new Date().getDay() + 6) % 7;
+	// Index du jour actuel
+	const todayIndex = (today.getDay() + 6) % 7;
+	// date de la semaine
+	const currentWeekDate = new Date(today);
+	currentWeekDate.setDate(today.getDate() + weekOffset * 7);
 
 	const getDateForDay = (index) => {
-		const date = new Date();
-		const diff = index - todayIndex;
-		date.setDate(date.getDate() + diff);
+		const date = new Date(currentWeekDate);
+		date.setDate(currentWeekDate.getDate() + (index - todayIndex));
 		return date;
 	};
 
@@ -43,6 +55,24 @@ export default function PlanningScreen() {
 		const m = minutes % 60;
 		return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
 	};
+
+	// Numéro de la semaine
+	function getWeekNumber(date) {
+		const d = new Date(
+			Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+		);
+		const dayNum = d.getUTCDay() || 7;
+		d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+		const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+		return Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+	}
+
+	const weekNumber = getWeekNumber(currentWeekDate);
+
+	const isToday = (date) =>
+		date.getDate() === today.getDate() &&
+		date.getMonth() === today.getMonth() &&
+		date.getFullYear() === today.getFullYear();
 
 	useEffect(() => {
 		if (!user?._id || !token) return;
@@ -71,7 +101,35 @@ export default function PlanningScreen() {
 				<Text style={styles.date}>{formattedDate}</Text>
 			</View>
 
-			<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+			<View style={styles.planningNavBar}>
+				<Pressable
+					onPress={() => setWeekOffset((prev) => prev - 1)}
+					style={styles.planningNavBarLeft}
+				>
+					<FontAwesomeIcon
+						icon={faChevronLeft}
+						color={themeColors.text}
+					/>
+				</Pressable>
+				<Text style={styles.weekText}>Semaine {weekNumber}</Text>
+				<Pressable
+					onPress={() => setWeekOffset((prev) => prev + 1)}
+					style={styles.planningNavBarRight}
+				>
+					<FontAwesomeIcon
+						icon={faChevronRight}
+						color={themeColors.text}
+					/>
+				</Pressable>
+			</View>
+
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+				contentContainerStyle={{
+					flexGrow: 1,
+					paddingBottom: tabBarHeight,
+				}}
+			>
 				{days.map((day, index) => {
 					const date = getDateForDay(index);
 					const dateStr = date.toLocaleDateString("fr-FR", {
@@ -92,7 +150,7 @@ export default function PlanningScreen() {
 							<Text
 								style={[
 									styles.day,
-									index === todayIndex && styles.today,
+									isToday(date) && styles.today,
 								]}
 							>
 								{day} {dateStr}
@@ -186,12 +244,12 @@ export default function PlanningScreen() {
 
 const styles = StyleSheet.create({
 	container: {
-		// flex: 1,
+		flex: 1,
 		backgroundColor: themeColors.white,
 		// backgroundColor: "red",
 		paddingHorizontal: 24,
 		paddingTop: 80,
-		paddingBottom: 60,
+		// paddingBottom: 60,
 	},
 	header: {
 		flexDirection: "row",
@@ -201,6 +259,24 @@ const styles = StyleSheet.create({
 	},
 	title: { fontSize: 24, fontWeight: "bold" },
 	date: { fontSize: 14, color: themeColors.text, marginTop: 4 },
+	planningNavBar: {
+		display: "flex",
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+		backgroundColor: themeColors.background,
+		// backgroundColor: "red",
+		paddingVertical: 8,
+		paddingHorizontal: 12,
+		borderRadius: 8,
+		marginTop: 16,
+		marginBottom: 8,
+	},
+	weekText: {
+		fontSize: 16,
+		fontWeight: "bold",
+		color: themeColors.primary,
+	},
 	daysContainer: {
 		// justifyContent: "space-between",
 		marginTop: 24,

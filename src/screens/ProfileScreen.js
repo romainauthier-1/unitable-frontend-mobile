@@ -23,7 +23,7 @@ export default function ProfileScreen() {
 
   const handleUpdate = async () => {
     const response = await fetch(
-      `https://unitable-backend.vercel.app/employee/${user._id}`,
+      `${process.env.EXPO_PUBLIC_BACK_URL}/employee/${user._id}`,
       {
         method: "PUT",
         headers: {

@@ -41,9 +41,8 @@ export default function LoginScreen({ navigation }) {
     if (!validateInputs()) return;
 
     try {
-      console.log("Début fetch avec ces données: ", email, password);
       const response = await fetch(
-        `https://unitable-backend.vercel.app/users/signin`,
+        `${process.env.EXPO_PUBLIC_BACK_URL}/users/signin`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -52,7 +51,6 @@ export default function LoginScreen({ navigation }) {
       );
 
       const data = await response.json();
-      console.log("Dispatch avec ces infos:", data.user, data.token);
       if (data.result) {
         // setUser(true);
         dispatch(

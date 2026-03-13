@@ -36,7 +36,7 @@ export default function HomeScreen() {
   const getMyShifts = async (userId, token) => {
     try {
       const response = await fetch(
-        `https://unitable-backend.vercel.app/planning/user/${userId}`,
+        `${process.env.EXPO_PUBLIC_BACK_URL}/planning/user/${userId}`,
         {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },

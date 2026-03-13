@@ -77,7 +77,7 @@ export default function PlanningScreen() {
   useEffect(() => {
     if (!user?._id || !token) return;
 
-    fetch(`${process.env.EXPO_BACK_URL}/planning/user/${user._id}`, {
+    fetch(`https://unitable-backend.vercel.app/planning/user/${user._id}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     })

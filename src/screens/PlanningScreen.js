@@ -5,6 +5,8 @@ import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { themeColors } from "../theme/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { useIsFocused } from "@react-navigation/native";
+
 import {
   faChevronLeft,
   faChevronRight,
@@ -12,6 +14,7 @@ import {
 
 export default function PlanningScreen() {
   const tabBarHeight = useBottomTabBarHeight();
+  const isFocused = useIsFocused();
 
   const [planning, setPlanning] = useState([]);
   const [weekOffset, setWeekOffset] = useState(0);
@@ -86,7 +89,7 @@ export default function PlanningScreen() {
         if (data.result) setPlanning(data.foundCTs);
       })
       .catch((err) => console.error(err));
-  }, [user, token]);
+  }, [user, token, isFocused]);
 
   const Tag = ({ label }) => (
     <View style={styles.tag}>

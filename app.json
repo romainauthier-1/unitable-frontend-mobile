@@ -1,42 +1,45 @@
 {
-  "expo": {
-    "name": "unitable-frontend-mobile",
-    "slug": "unitable-frontend-mobile",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "EXPO_BACK_URL": "https://unitable-backend.vercel.app/",
-      "eas": {
-        "projectId": "47b8443a-9662-4195-a07f-b7f27d26e1b0"
-      }
-    },
-    "owner": "dankysten",
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/47b8443a-9662-4195-a07f-b7f27d26e1b0"
-    }
-  }
+	"expo": {
+		"name": "unitable-frontend-mobile",
+		"slug": "unitable-frontend-mobile",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"userInterfaceStyle": "light",
+		"splash": {
+			"image": "./assets/splash-icon.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"adaptiveIcon": {
+				"backgroundColor": "#E6F4FE",
+				"foregroundImage": "./assets/android-icon-foreground.png",
+				"backgroundImage": "./assets/android-icon-background.png",
+				"monochromeImage": "./assets/android-icon-monochrome.png"
+			}
+		},
+		"web": {
+			"favicon": "./assets/favicon.png",
+			"display": "standalone",
+			"backgroundColor": "#1B365D",
+			"themeColor": "#1B365D"
+		},
+		"extra": {
+			"EXPO_BACK_URL": "https://unitable-backend.vercel.app/",
+			"eas": {
+				"projectId": "47b8443a-9662-4195-a07f-b7f27d26e1b0"
+			}
+		},
+		"owner": "dankysten",
+		"runtimeVersion": {
+			"policy": "appVersion"
+		},
+		"updates": {
+			"url": "https://u.expo.dev/47b8443a-9662-4195-a07f-b7f27d26e1b0"
+		}
+	}
 }

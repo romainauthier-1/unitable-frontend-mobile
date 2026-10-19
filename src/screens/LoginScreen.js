@@ -10,13 +10,9 @@ import {
 } from "react-native";
 import { themeColors } from "../theme/colors";
 import { useState, useContext } from "react";
-import Constants from "expo-constants";
 import { useDispatch } from "react-redux";
 import { login } from "../reducers/Auth";
-const { EXPO_BACK_URL } = Constants.expoConfig.extra;
 
-// const BACK_URL = process.env.EXPO_BACK_URL;
-// console.log("EXPO_BACK_URL:", EXPO_BACK_URL);
 
 const screenHeight = Dimensions.get("window").height;
 
